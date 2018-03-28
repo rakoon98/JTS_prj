@@ -20,9 +20,11 @@ public class SplashActivity extends AppCompatActivity {
 
          if(sessionManager.getPassword()!=null){
              Intent i = new Intent(getApplicationContext(), PasswordActivity.class);
+             finish();
              startActivity(i);
          }else{
              Intent i = new Intent(getApplicationContext(), MainActivity.class);
+             finish();
              startActivity(i);
          }
 

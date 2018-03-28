@@ -181,6 +181,7 @@
                         <RelativeLayout
                             android:layout_width="@dimen/add_day_height"
                             android:layout_height="wrap_content">
+
                             <ImageView
                                 android:id="@+id/choice_cover_picture"
                                 android:layout_width="@dimen/add_day_height"
@@ -189,12 +190,11 @@
                                 android:src="@drawable/ic_menu_camera" />
 
                             <ProgressBar
-                                android:visibility="gone"
+                                android:id="@+id/pb"
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_centerHorizontal="true"
-                                android:id="@+id/pb"
-                                />
+                                android:visibility="gone" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -281,15 +281,33 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/addBtn"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@color/btn_backgroundcolor"
-                android:text="등록"
-                android:textColor="@color/White" />
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/addBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/btn_backgroundcolor"
+                    android:text="등록"
+                    android:textColor="@color/White" />
+
+                <Button
+                    android:visibility="gone"
+                    android:id="@+id/updateBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/btn_backgroundcolor"
+                    android:text="수정"
+                    android:textColor="@color/White" />
+
+
+            </RelativeLayout>
 
         </LinearLayout>
 

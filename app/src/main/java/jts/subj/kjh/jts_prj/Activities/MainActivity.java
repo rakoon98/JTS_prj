@@ -269,10 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     am.recyclerview.setVisibility(View.GONE);
                     am.mainLayout.setVisibility(View.VISIBLE);
                 }
-
-
             }
-
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
@@ -280,6 +277,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                DDayData dDayData = dataSnapshot.getValue(DDayData.class);
+                for(int i = 0; i<dDayDatas.size(); i++){
+                    if(dDayDatas.get(i).getChildTitle().equals(dDayData.getChildTitle())){
+                        dDayDatas.remove(i);
+                        mainRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                if(dDayDatas.size()==0){
+                    am.recyclerview.setVisibility(View.GONE);
+                    am.mainLayout.setVisibility(View.VISIBLE);
+                }
+                Log.d("ddaydatas", dDayData.toString());
 
             }
 

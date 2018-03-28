@@ -26,6 +26,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -59,6 +60,8 @@ public class DayAddActivity extends AppCompatActivity {
     String photoUri = "";
     DDayData dd;
 
+    String childTitle="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +89,7 @@ public class DayAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, 1);
+                startActivityForResult(i, 7777);
             }
         });
         adb.choiceHold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -121,6 +124,20 @@ public class DayAddActivity extends AppCompatActivity {
                 }
             }
         });
+        adb.updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dd = new DDayData();
+                dd.setTitle(adb.title.getText().toString().trim());
+                dd.setCover_url(photoUri);
+                dd.setDate(adb.calendar1.getText().toString().trim());
+                dd.setBar_hold(String.valueOf(choice_hold));
+                dd.setOne_thousand_noti(String.valueOf(adb.choiceThousand.isChecked()));
+                dd.setOne_year_noti(String.valueOf(adb.choiceYear.isChecked()));
+
+                update();
+            }
+        });
         adb.addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,6 +165,36 @@ public class DayAddActivity extends AppCompatActivity {
     }
 
     public void init() {
+        // 추가인지 수정인지 구별
+        if(getIntent()!=null){
+            if(getIntent().getStringExtra("update")!=null) {
+
+                adb.title.setText(getIntent().getStringExtra("title"));
+                adb.calendar1.setText(getIntent().getStringExtra("date"));
+                photoUri = getIntent().getStringExtra("cover");
+                childTitle = getIntent().getStringExtra("childTitle");
+                if(getIntent().getStringExtra("thousand").equals("true")){
+                    adb.choiceThousand.setChecked(true);
+                }else{
+                    adb.choiceThousand.setChecked(false);
+                }
+
+                if(getIntent().getStringExtra("year").equals("true")){
+                    adb.choiceYear.setChecked(true);
+                }else{
+                    adb.choiceYear.setChecked(false);
+                }
+
+
+                adb.addBtn.setVisibility(View.GONE);
+                adb.updateBtn.setVisibility(View.VISIBLE);
+            }else{
+                adb.addBtn.setVisibility(View.VISIBLE);
+                adb.updateBtn.setVisibility(View.GONE);
+            }
+        }
+
+
         mStorageRef = FirebaseStorage.getInstance().getReference();
         sessionManager = new SessionManager(this);
         choice_thousand = Boolean.parseBoolean(String.valueOf(sessionManager.getThousand()));
@@ -206,9 +253,8 @@ public class DayAddActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == 7777) {
             adb.pb.setVisibility(View.VISIBLE);
-            if (coverImage != null) {
                 coverImage = data.getData();
                 if (coverImage != null && !coverImage.equals("") && !coverImage.equals(null) && !coverImage.equals("null")) {
                     try {
@@ -222,7 +268,6 @@ public class DayAddActivity extends AppCompatActivity {
 
             }
             adb.pb.setVisibility(View.GONE);
-        }
     }
 
 
@@ -289,6 +334,52 @@ public class DayAddActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public void update(){
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MyDay");
+//        Query applesQuery = ref.child(id).orderByChild("childTitle").equalTo(childTitle);
+        Hashtable<String, Object> dayinfo = new Hashtable<>();
+        dayinfo.put("title", dd.getTitle());
+        dayinfo.put("cover_url", photoUri);
+        dayinfo.put("Date", dd.getDate());
+        dayinfo.put("type", "type");
+        dayinfo.put("bar_hold", String.valueOf(dd.getBar_hold()));
+        dayinfo.put("one_thousand_noti", String.valueOf(dd.getOne_thousand_noti()));
+        dayinfo.put("one_year_noti", String.valueOf(dd.getOne_year_noti()));
+        dayinfo.put("childTitle", returnDateforadd());
+
+         ref.child(id).updateChildren(dayinfo);
+        finish();
+
+
+
+
+
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                Hashtable<String, Object> dayinfo = new Hashtable<>();
+//                dayinfo.put("title", dd.getTitle());
+//                dayinfo.put("cover_url", photoUri);
+//                dayinfo.put("Date", dd.getDate());
+//                dayinfo.put("type", "type");
+//                dayinfo.put("bar_hold", String.valueOf(dd.getBar_hold()));
+//                dayinfo.put("one_thousand_noti", String.valueOf(dd.getOne_thousand_noti()));
+//                dayinfo.put("one_year_noti", String.valueOf(dd.getOne_year_noti()));
+//                dayinfo.put("childTitle", returnDateforadd());
+//
+//                ref.child(id).updateChildren(dayinfo);
+//                finish();
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
 

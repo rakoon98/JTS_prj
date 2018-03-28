@@ -102,17 +102,21 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final View innerView = getLayoutInflater().inflate(R.layout.dialog_detail_menu, null);
+                final Dialog mDialog = new Dialog(DetailActivity.this);
                 TextView remove = innerView.findViewById(R.id.remove);
+                TextView update = innerView.findViewById(R.id.update);
                 remove.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        remove();
-                    }
-                });
-                Dialog mDialog = new Dialog(DetailActivity.this);
+                    @Override public void onClick(View view) {
+                        mDialog.dismiss();
+                        remove(); }});
+                update.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View view) {
+                        mDialog.dismiss();
+                        update(); }});
+
                 mDialog.setContentView(innerView);
                 mDialog.setCancelable(true); // Dialog 위치 이동 시키기 mDialog.getWindow().setGravity(Gravity.BOTTOM); mDialog.show();
-                mDialog.getWindow().setGravity(Gravity.TOP|Gravity.RIGHT);
+                mDialog.getWindow().setGravity(Gravity.TOP | Gravity.RIGHT);
                 mDialog.show();
 
             }
@@ -122,43 +126,41 @@ public class DetailActivity extends AppCompatActivity {
         choiceWhat();
     }
 
-    public void getPhId(){
+    public void getPhId() {
         // -- 권한얻어
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         int permissionCheck = ContextCompat.checkSelfPermission(DetailActivity.this, android.Manifest.permission.READ_PHONE_STATE);
         if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
             id = tm.getDeviceId();
         } else {
-                Toast.makeText(getApplicationContext(), "권한이 필요합니다", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getApplicationContext(), "권한이 필요합니다", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public void update(){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MyDay");
-        Query applesQuery = ref.child(id).orderByChild("childTitle").equalTo(childTitle);
+    public void update() {
 
-        applesQuery.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        Intent i = new Intent(getApplicationContext(), DayAddActivity.class);
+        i.putExtra("update","update");
+        i.putExtra("title",title);
+        i.putExtra("date",date);
+        i.putExtra("thousand",thousand);
+        i.putExtra("year",year);
+        i.putExtra("cover",cover);
+        i.putExtra("childTitle",childTitle);
+        startActivity(i);
     }
 
-    public void remove(){
+    public void remove() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("MyDay");
         Query applesQuery = ref.child(id).orderByChild("childTitle").equalTo(childTitle);
 
         applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
                     appleSnapshot.getRef().removeValue();
+                    Toast.makeText(getApplicationContext(), "디데이를 삭제하였습니다",Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
@@ -171,11 +173,16 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     // 선택지 구분
-    public void choiceWhat(){
-        if(thousand.equals("false") && year.equals("false")){ noSelect(); }
-        else if(thousand.equals("true") && year.equals("false")){ thousandSelect(); }
-        else if(thousand.equals("false") && year.equals("true")){ yearSelect(); }
-        else if(thousand.equals("true") && year.equals("true")){ tharSelect(); }
+    public void choiceWhat() {
+        if (thousand.equals("false") && year.equals("false")) {
+            noSelect();
+        } else if (thousand.equals("true") && year.equals("false")) {
+            thousandSelect();
+        } else if (thousand.equals("false") && year.equals("true")) {
+            yearSelect();
+        } else if (thousand.equals("true") && year.equals("true")) {
+            tharSelect();
+        }
     }
 
     public String compareDate(String date) {
@@ -318,21 +325,6 @@ public class DetailActivity extends AppCompatActivity {
                     detailDataList.add(new DetailData(cnt_year + " 주년", "D" + c_term, addDate));
                     cnt_year++;
                 }
-//                    if(i==100*cnt && i==365*cnt){
-//                        detailDataList.add(new DetailData(cnt_year + " 주년", "D" + c_term, addDate));
-//                        cnt_year++;
-//                        Log.d("addDate2", String.valueOf(i));
-//                    } else
-//                    if (i == 100 * cnt) {
-//                        detailDataList.add(new DetailData(100 * cnt_thousand + " 일", "D" + c_term, addDate));
-//                        cnt_thousand++;
-//                    }
-//                    if (i == 365 * cnt) {
-                if (i % 365 == 0) {
-                    detailDataList.add(new DetailData(cnt_year + " 주년", "D" + c_term, addDate));
-                    cnt_year++;
-                }
-
                 cnt += 1;
             }
         } catch (Exception e) {
