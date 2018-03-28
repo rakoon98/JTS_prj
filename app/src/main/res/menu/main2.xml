@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="이벤트 설정"
+        android:enabled="false"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings2"
+        android:orderInCategory="100"
+        android:title="이벤트 타입"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings3"
+        android:orderInCategory="100"
+        android:title="이벤트 정렬"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings4"
+        android:orderInCategory="100"
+        android:title="취소"
+        app:showAsAction="never" />
+
+</menu>

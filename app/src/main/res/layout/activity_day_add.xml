@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="activityadd"
+            type="jts.subj.kjh.jts_prj.Activities.DayAddActivity" />
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="jts.subj.kjh.jts_prj.Activities.DayAddActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/White"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <ImageView
+                    android:id="@+id/arrow_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_close_black_24dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="디데이 추가"
+                    android:textColor="@color/toolbar_title"
+                    android:textSize="22sp" />
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/layout_background"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/White"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_day_height"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_layout">
+
+                        <EditText
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/add_day_height"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:hint="제목"
+                            android:textSize="@dimen/text_size_selectlayout" />
+
+                        <TextView
+                            android:layout_width="@dimen/add_day_height"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="색"
+                            android:textSize="@dimen/text_size_selectlayout" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <include layout="@layout/divide_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_day_height"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/padding_layout">
+
+                        <TextView
+                            android:id="@+id/calendar1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:padding="@dimen/padding_layout"
+                            android:text="2018.03.28"
+                            android:textSize="@dimen/text_size_selectlayout" />
+
+                        <ImageView
+                            android:id="@+id/calendar2"
+                            android:layout_width="@dimen/add_day_height"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_date_range_black_24dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/White"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_day_height"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:padding="@dimen/padding_layout"
+                            android:text="타입"
+                            android:textSize="@dimen/text_size_selectlayout" />
+
+                        <TextView
+                            android:id="@+id/typename"
+                            android:layout_width="@dimen/add_day_height"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="디데이"
+                            android:textSize="@dimen/text_size_selectlayout" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/divide_line" />
+
+                    <LinearLayout
+                        android:id="@+id/cover_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/add_day_height"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:padding="@dimen/padding_layout"
+                            android:text="커버사진"
+                            android:textSize="@dimen/text_size_selectlayout" />
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/add_day_height"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/choice_cover_picture"
+                                android:layout_width="@dimen/add_day_height"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_menu_camera" />
+
+                            <ProgressBar
+                                android:visibility="gone"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_centerHorizontal="true"
+                                android:id="@+id/pb"
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/White"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/add_day_height"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_layout">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="상단바에 디데이 고정"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/choice_hold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <include layout="@layout/divide_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/add_day_height"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_layout">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="100일 단위 기념 알림"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/choice_thousand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <include layout="@layout/divide_line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/add_day_height"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/padding_layout">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="1년 단위 기념 알림"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/choice_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:src="@drawable/ic_menu_camera" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/btn_backgroundcolor"
+                android:text="등록"
+                android:textColor="@color/White" />
+
+        </LinearLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
